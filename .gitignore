@@ -1,0 +1,7 @@
+<CodeBlock language="gitignore" editable>
+.env
+.venv/
+__pycache__/
+data/
+*.pyc
+</CodeBlock>
