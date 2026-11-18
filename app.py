@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import date, timedelta
 
 import database as db
+import time
 
 from ai_recipes import generate_recipes
 
@@ -35,11 +36,23 @@ def export_inventory_to_excel(items):
 
 
 # Initialize application
+
 st.set_page_config(
     page_title="PantryPal",
     page_icon="🥑",
     layout="wide"
 )
+
+# Recipe generation limits
+MAX_RECIPE_GENERATIONS = 5
+RECIPE_COOLDOWN_SECONDS = 30
+
+if "recipe_generation_count" not in st.session_state:
+    st.session_state.recipe_generation_count = 0
+
+if "last_recipe_generation" not in st.session_state:
+    st.session_state.last_recipe_generation = 0
+
 
 
 st.markdown("""
@@ -859,24 +872,7 @@ with recipe_generator:
     <div class="tape-label">FROM THE RECIPE BOX</div>
     """, unsafe_allow_html=True)
 
-    if st.button("GENERATE RECIPES", type="primary"):
-
-        if not items:
-            st.warning(
-                "Your inventory is empty. Stock the kitchen first!"
-            )
-
-        else:
-            with st.spinner("Working the kitchen..."):
-
-                try:
-                    recipes = generate_recipes(
-                        items,
-                        servings=servings,
-                        max_extra_ingredients=max_extra
-                    )
-
-                    st.markdown("""
+st.markdown("""
                     <div style="
                         background-color: #F3EBD8;
                         border: 1px solid #C6BDAA;
@@ -902,14 +898,59 @@ with recipe_generator:
                             Today's Recipe Suggestions
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """, unsafe_allow_html=True)    
 
-                    st.markdown(recipes)
+if st.button("Generate Recipes", type="primary"):
+    current_time = time.time()
 
-                except Exception as e:
-                    st.error(
-                        f"Something went wrong while generating recipes: {e}"
-                    )
+    generations_used = st.session_state.recipe_generation_count
+    last_generation = st.session_state.last_recipe_generation
+
+    time_since_last = current_time - last_generation
+
+    if not items:
+        st.warning("Add ingredients to your inventory before generating recipes.")
+
+    elif generations_used >= MAX_RECIPE_GENERATIONS:
+        st.warning(
+            "You've reached the recipe generation limit for this session. "
+            "Thanks for trying PantryPal!"
+        )
+
+    elif last_generation > 0 and time_since_last < RECIPE_COOLDOWN_SECONDS:
+        wait_time = int(RECIPE_COOLDOWN_SECONDS - time_since_last) + 1
+
+        st.warning(
+            f"Please wait {wait_time} seconds before generating more recipes."
+        )
+
+    else:
+        st.session_state.recipe_generation_count += 1
+        st.session_state.last_recipe_generation = current_time
+
+        with st.spinner("Your kitchen is working its magic..."):
+            try:
+                recipes = generate_recipes(
+                    items,
+                    servings=servings,
+                    max_extra_ingredients=max_extra
+                )
+
+                st.subheader("Your Recipe Ideas")
+                st.markdown(recipes)
+
+            except Exception as e:
+                st.error(f"Something went wrong: {e}")
+
+st.caption(
+    f"Recipe generations used: "
+    f"{st.session_state.recipe_generation_count} "
+    f"of {MAX_RECIPE_GENERATIONS} for this session."
+)
+
+
+
+                    
 
 
 
