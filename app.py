@@ -45,10 +45,24 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+/* =================================
+   PANTRYPAL - COLOR PALETTE
+   ================================= */
+
+:root {
+    --sage: #6B9080;
+    --eucalyptus: #A4C3B2;
+    --seafoam: #CCE3DE;
+    --mist: #EAF4F4;
+    --fresh: #F6FFF8;
+    --text-dark: #263630;
+    --text-muted: #62766D;
+}
+
 /* Main application background */
 .stApp {
-    background-color: #E9E6DD;
-    color: #25292B;
+    background-color: var(--fresh);
+    color: var(--text-dark);
 }
 
 /* Main content area */
@@ -58,108 +72,172 @@ st.markdown("""
     max-width: 1400px;
 }
 
-/* Sidebar - dark industrial finish */
+/* =================================
+   SIDEBAR
+   ================================= */
+
 [data-testid="stSidebar"] {
-    background-color: #25292B;
+    background-color: var(--sage);
 }
 
 [data-testid="stSidebar"] * {
-    color: #F0EDE5;
+    color: var(--fresh);
 }
 
-/* Main headings */
+/* =================================
+   HEADINGS AND TEXT
+   ================================= */
+
 h1, h2, h3 {
-    color: #25292B !important;
+    color: var(--text-dark) !important;
     font-weight: 800 !important;
 }
 
-/* Tabs */
+p, label {
+    color: var(--text-dark);
+}
+
+/* =================================
+   NAVIGATION TABS
+   ================================= */
+
 .stTabs [data-baseweb="tab-list"] {
     gap: 8px;
-    border-bottom: 2px solid #AEB4B5;
+    border-bottom: 2px solid var(--seafoam);
 }
 
 .stTabs [data-baseweb="tab"] {
-    background-color: #D6D1C5;
+    background-color: var(--mist);
     border-radius: 5px 5px 0 0;
-    color: #25292B;
+    color: var(--text-dark);
     padding: 10px 18px;
 }
 
 .stTabs [aria-selected="true"] {
-    background-color: #25292B !important;
-    color: #FFFFFF !important;
+    background-color: var(--sage) !important;
+    color: white !important;
 }
 
-/* Buttons */
+/* =================================
+   BUTTONS
+   ================================= */
+
 .stButton > button,
 .stDownloadButton > button {
-    background-color: #25292B;
-    color: #FFFFFF;
-    border: 1px solid #25292B;
-    border-radius: 4px;
+    background-color: var(--sage);
+    color: white;
+    border: 1px solid var(--sage);
+    border-radius: 5px;
     font-weight: 700;
+    transition: background-color 0.2s ease;
 }
 
 .stButton > button:hover,
 .stDownloadButton > button:hover {
-    background-color: #B94C35;
-    color: #FFFFFF;
-    border-color: #B94C35;
+    background-color: #527765;
+    color: white;
+    border-color: #527765;
 }
 
-/* Metric cards */
+/* =================================
+   METRIC CARDS
+   ================================= */
+
 [data-testid="stMetric"] {
-    background-color: #D7D9D6;
-    border: 1px solid #AEB4B5;
-    border-radius: 5px;
+    background-color: var(--seafoam);
+    border: 1px solid var(--eucalyptus);
+    border-radius: 6px;
     padding: 16px;
 }
 
-/* Input fields */
+[data-testid="stMetricLabel"] {
+    color: var(--text-muted);
+}
+
+[data-testid="stMetricValue"] {
+    color: var(--text-dark);
+}
+
+/* =================================
+   INPUT FIELDS
+   ================================= */
+
 .stTextInput input,
 .stNumberInput input,
-.stTextArea textarea,
+.stTextArea textarea {
+    background-color: var(--mist);
+    color: var(--text-dark);
+    border-color: var(--eucalyptus);
+}
+
 .stSelectbox [data-baseweb="select"] {
-    background-color: #F8F5ED;
+    background-color: var(--mist);
 }
 
-/* Dividers */
-hr {
-    border-color: #AEB4B5;
+/* Checkboxes */
+.stCheckbox label {
+    color: var(--text-dark);
 }
 
+/* =================================
+   MASKING TAPE LABELS
+   ================================= */
 
-/* Masking tape section labels */
 .tape-label {
     display: inline-block;
-    background-color: #D6C18D;
-    color: #25292B;
+    background-color: var(--eucalyptus);
+    color: var(--text-dark);
     padding: 7px 18px;
     font-weight: 800;
     font-size: 15px;
     letter-spacing: 1px;
     transform: rotate(-1deg);
-    box-shadow: 1px 2px 3px rgba(0,0,0,0.12);
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.10);
     margin: 8px 0 16px 0;
 }
 
-/* Small uppercase kitchen labels */
+/* Small kitchen labels */
 .kitchen-label {
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 2px;
-    color: #777D67;
+    color: var(--sage);
     text-transform: uppercase;
 }
 
-/* Inventory section panels */
+/* Inventory panels */
 .storage-panel {
-    background-color: #F3F0E8;
-    border: 1px solid #C6C4BB;
-    border-radius: 4px;
+    background-color: var(--mist);
+    border: 1px solid var(--seafoam);
+    border-radius: 5px;
     padding: 18px;
     margin-bottom: 15px;
+}
+
+/* =================================
+   DIVIDERS AND TABLES
+   ================================= */
+
+hr {
+    border-color: var(--seafoam);
+}
+
+/* =================================
+   ALERTS
+   ================================= */
+
+[data-testid="stAlert"] {
+    border-radius: 5px;
+}
+
+/* =================================
+   EXPANDERS
+   ================================= */
+
+[data-testid="stExpander"] {
+    background-color: var(--mist);
+    border: 1px solid var(--seafoam);
+    border-radius: 5px;
 }
 
 </style>
@@ -196,7 +274,6 @@ dashboard, inventory, add_item, manage, recipe_generator, import_excel = st.tabs
 # -------------------------
 # DASHBOARD
 # -------------------------
-
 
 with dashboard:
     st.markdown("""
@@ -354,7 +431,7 @@ with inventory:
             CURRENT INGREDIENTS • STORAGE • QUANTITIES
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True); 
 
     if df.empty:
         st.info("No ingredients added yet. Your shelves are looking a little empty!")
