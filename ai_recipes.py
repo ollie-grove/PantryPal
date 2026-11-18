@@ -1,5 +1,6 @@
 
 import os
+import streamlit as st
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -7,9 +8,27 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Create connection to OpenAI
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
-)
+
+load_dotenv()
+
+# Check the local .env file first
+api_key = os.getenv("OPENAI_API_KEY")
+
+# If not found, check Streamlit Cloud secrets
+if not api_key:
+    try:
+        api_key = st.secrets["OPENAI_API_KEY"]
+    except Exception:
+        api_key = None
+
+if not api_key:
+    raise RuntimeError(
+        "OpenAI API key not found. Check your .env file "
+        "or Streamlit Cloud Secrets."
+    )
+
+client = OpenAI(api_key=api_key)
+
 
 
 
