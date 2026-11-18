@@ -61,7 +61,7 @@ st.markdown("""
 
 /* Main application background */
 .stApp {
-    background-color: var(--fresh);
+    background-color: var(--mist);
     color: var(--text-dark);
 }
 
@@ -278,19 +278,19 @@ dashboard, inventory, add_item, manage, recipe_generator, import_excel = st.tabs
 with dashboard:
     st.markdown("""
     <div style="
-        background-color: #25292B;
+        background-color: #a4c3b2;
         padding: 28px;
         border-radius: 6px;
         margin-bottom: 25px;
         border-left: 8px solid #B94C35;
     ">
         <div style="
-            color: #D6C18D;
+            color: #1A231F;
             font-size: 12px;
             letter-spacing: 3px;
             font-weight: bold;
         ">
-            BACK OF HOUSE / INVENTORY MANAGEMENT
+            BACK OF HOUSE
         </div>
         <h1 style="
             color: #F0EDE5 !important;
@@ -301,11 +301,11 @@ with dashboard:
             PANTRYPAL
         </h1>
         <div style="
-            color: #AEB4B5;
+            color: #3D5248;
             font-size: 14px;
             margin-top: 5px;
         ">
-            KNOW YOUR STOCK. WASTE LESS. COOK MORE.
+            WASTE LESS. COOK MORE.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -329,7 +329,7 @@ with dashboard:
 
     st.divider()
 
-    st.markdown("## ⚠️ USE FIRST")
+    st.markdown("## ❗ USE FIRST")
     st.caption("INGREDIENTS APPROACHING THEIR EXPIRATION DATE")
 
     from datetime import date, timedelta
